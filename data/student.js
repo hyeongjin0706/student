@@ -45,7 +45,7 @@ export const Student = sequelize.define(
 // 모든 학생 검색
 export async function searchAll(Score) {
     // sequelize.query를 사용하여 쿼리문으로 조회
-    return sequelize.query("SELECT RANK() OVER(ORDER BY sc.score_total DESC) as '석차', s.student_idx, s.student_id, s.student_name, s.student_phone, s.student_email, s.student_address, s.student_regdate, sc.score_java, sc.score_python, sc.score_c, sc.score_regdate, sc.score_total, sc.score_avg FROM students AS s LEFT JOIN scores AS sc ON s.student_idx = sc.student_idx",
+    return sequelize.query("SELECT RANK() OVER (ORDER BY sc.score_total DESC) AS scoreRank, s.student_idx, s.student_id, s.student_name, s.student_phone, s.student_email, s.student_address, s.student_regdate, sc.score_java, sc.score_python, sc.score_c, sc.score_regdate, sc.score_total, sc.score_avg FROM students AS s LEFT JOIN scores AS sc ON s.student_idx = sc.student_idx ORDER BY scoreRank asc, s.student_idx DESC",
     { type: sequelize.QueryTypes.SELECT })
     .then((result) => {
         return result;
